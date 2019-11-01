@@ -6,7 +6,7 @@ const https = require("https");
 
 
 
-const invocationName = "instructable cognitive agents";
+const invocationName = "vine me";
 
 // Session Attributes 
 //   Alexa will track attributes for you, by default only during the lifespan of your session.
@@ -153,17 +153,17 @@ const AMAZON_NavigateHomeIntent_Handler =  {
     },
 };
 
-const classEndTime_Handler =  {
+const Getmeavine_Handler =  {
     canHandle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
-        return request.type === 'IntentRequest' && request.intent.name === 'classEndTime' ;
+        return request.type === 'IntentRequest' && request.intent.name === 'Getmeavine' ;
     },
     handle(handlerInput) {
         const request = handlerInput.requestEnvelope.request;
         const responseBuilder = handlerInput.responseBuilder;
         let sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
-        let say = 'The class ends at 7:10 PM. ';
+        let say = 'Why is this Kansas but this is not Ar- Kansas? America! Explain!';
 
         let slotStatus = '';
         let resolvedSlot;
@@ -172,52 +172,28 @@ const classEndTime_Handler =  {
         // getSlotValues returns .heardAs, .resolved, and .isValidated for each slot, according to request slot status codes ER_SUCCESS_MATCH, ER_SUCCESS_NO_MATCH, or traditional simple request slot without resolutions
 
         // console.log('***** slotValues: ' +  JSON.stringify(slotValues, null, 2));
-        //   SLOT: long 
-        if (slotValues.long.heardAs && slotValues.long.heardAs !== '') {
-            //slotStatus += ' slot long was heard as ' + slotValues.long.heardAs + '. ';
+        //   SLOT: Vine 
+        if (slotValues.Vine.heardAs && slotValues.Vine.heardAs !== '') {
+            //slotStatus += ' slot Vine was heard as ' + slotValues.Vine.heardAs + '. ';
         } else {
-            //slotStatus += 'slot long is empty. ';
+            //slotStatus += 'slot Vine is empty. ';
         }
-        if (slotValues.long.ERstatus === 'ER_SUCCESS_MATCH') {
+        if (slotValues.Vine.ERstatus === 'ER_SUCCESS_MATCH') {
             slotStatus += 'a valid ';
-            if(slotValues.long.resolved !== slotValues.long.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.long.resolved + '. '; 
+            if(slotValues.Vine.resolved !== slotValues.Vine.heardAs) {
+                slotStatus += 'synonym for ' + slotValues.Vine.resolved + '. '; 
                 } else {
                 slotStatus += 'match. '
             } // else {
                 //
         }
-        if (slotValues.long.ERstatus === 'ER_SUCCESS_NO_MATCH') {
-            //
+        if (slotValues.Vine.ERstatus === 'ER_SUCCESS_NO_MATCH') {
             //slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.long.heardAs + '" to the custom slot type used by slot long! '); 
+            console.log('***** consider adding "' + slotValues.Vine.heardAs + '" to the custom slot type used by slot Vine! '); 
         }
 
-        if( (slotValues.long.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.long.heardAs) ) {
-           // slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('classEndTime','long'), 'or');
-        }
-        //   SLOT: end 
-        if (slotValues.end.heardAs && slotValues.end.heardAs !== '') {
-            //slotStatus += ' slot end was heard as ' + slotValues.end.heardAs + '. ';
-        } else {
-            //slotStatus += 'slot end is empty. ';
-        }
-        if (slotValues.end.ERstatus === 'ER_SUCCESS_MATCH') {
-            slotStatus += 'a valid ';
-            if(slotValues.end.resolved !== slotValues.end.heardAs) {
-                slotStatus += 'synonym for ' + slotValues.end.resolved + '. '; 
-                } else {
-                slotStatus += 'match. '
-            } // else {
-                //
-        }
-        if (slotValues.end.ERstatus === 'ER_SUCCESS_NO_MATCH') {
-            //slotStatus += 'which did not match any slot value. ';
-            console.log('***** consider adding "' + slotValues.end.heardAs + '" to the custom slot type used by slot end! '); 
-        }
-
-        if( (slotValues.end.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.end.heardAs) ) {
-           // slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('classEndTime','end'), 'or');
+        if( (slotValues.Vine.ERstatus === 'ER_SUCCESS_NO_MATCH') ||  (!slotValues.Vine.heardAs) ) {
+           // slotStatus += 'A few valid values are, ' + sayArray(getExampleSlotValues('Getmeavine','Vine'), 'or');
         }
 
         say += slotStatus;
@@ -238,7 +214,7 @@ const LaunchRequest_Handler =  {
     handle(handlerInput) {
         const responseBuilder = handlerInput.responseBuilder;
 
-        let say = 'hello' + ' and welcome to ' + invocationName + ' ! Say help to hear some options.';
+        let say = 'Hello' + ' and welcome to Vine me demo!';
 
         let skillTitle = capitalize(invocationName);
 
@@ -682,7 +658,7 @@ exports.handler = skillBuilder
         AMAZON_HelpIntent_Handler, 
         AMAZON_StopIntent_Handler, 
         AMAZON_NavigateHomeIntent_Handler, 
-        classEndTime_Handler, 
+        Getmeavine_Handler, 
         LaunchRequest_Handler, 
         SessionEndedHandler
     )
@@ -707,7 +683,7 @@ exports.handler = skillBuilder
 const model = {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "instructable cognitive agents",
+      "invocationName": "vine me",
       "intents": [
         {
           "name": "AMAZON.FallbackIntent",
@@ -730,20 +706,16 @@ const model = {
           "samples": []
         },
         {
-          "name": "classEndTime",
+          "name": "Getmeavine",
           "slots": [
             {
-              "name": "long",
-              "type": "ica"
-            },
-            {
-              "name": "end",
-              "type": "ica"
+              "name": "Vine",
+              "type": "Vines"
             }
           ],
           "samples": [
-            "How {long} is this class",
-            "When does the class {end}"
+            "Quote a {Vine}",
+            "{Vine} me"
           ]
         },
         {
@@ -752,11 +724,11 @@ const model = {
       ],
       "types": [
         {
-          "name": "ica",
+          "name": "Vines",
           "values": [
             {
               "name": {
-                "value": "7:10 PM"
+                "value": "Arkansas"
               }
             }
           ]
